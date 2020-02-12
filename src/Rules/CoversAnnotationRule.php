@@ -89,8 +89,8 @@ final class CoversAnnotationRule implements Rule
                 $scope->getFile(),
                 $docComment->getLine(),
                 $docComment->getFilePos(),
-                $docComment->getText(),
-            ),
+                $docComment->getText()
+            )
         );
 
         if (array_key_exists($hash, $this->alreadyParsedDocComments)) {
