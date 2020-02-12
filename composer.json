@@ -17,16 +17,16 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": ">=7.2",
-        "nette/utils": "~3.0",
+        "php": "^7.2",
+        "nette/utils": "^3.0",
         "nikic/php-parser": "^4.3",
-        "phpstan/phpstan": "~0.12"
+        "phpstan/phpstan": "^0.12"
     },
     "require-dev": {
-        "brainbits/phpcs-standard": "*",
+        "brainbits/phpcs-standard": "^3.0",
         "ergebnis/phpstan-rules": "^0.14.2",
         "ikvasnica/phpstan-clean-test": "^0.3.0",
-        "php-coveralls/php-coveralls": "2.*",
+        "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan-strict-rules": "~0.12",
         "phpunit/phpunit": "^8.5.2 || ^9.0.0"
     },
