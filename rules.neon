@@ -1,0 +1,17 @@
+parameters:
+	brainbits:
+		unitTestNamespaceContainsString: Unit
+
+parametersSchema:
+	brainbits: structure([
+		unitTestNamespaceContainsString: string(),
+	])
+
+services:
+	-
+		class: Brainbits\PHPStan\Rules\CoversAnnotationRule
+		arguments:
+			unitTestNamespaceContainsString: %brainbits.unitTestNamespaceContainsString%
+		tags:
+			- phpstan.rules.rule
+
