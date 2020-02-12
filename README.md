@@ -1,6 +1,6 @@
 # PHPStan Clean Test rules
 
-![Continuous Integration](https://github.com/brainbits/phpstan-rules/workflows/continuous-integration/badge.svg?event=push)
+![Continuous Integration](https://github.com/brainbits/phpstan-rules/workflows/Tests/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/brainbits/phpstan-rules/badge.svg?branch=master)](https://coveralls.io/github/brainbits/phpstan-rules?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/881bcaeeaa2a45f59b0a77680f15fafe)](https://www.codacy.com/manual/brainbits/phpstan-rules?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=brainbits/phpstan-rules&amp;utm_campaign=Badge_Grade)
 [![Latest Stable Version](https://poser.pugx.org/brainbits/phpstan-rules/version)](https://packagist.org/packages/brainbits/phpstan-rules)
