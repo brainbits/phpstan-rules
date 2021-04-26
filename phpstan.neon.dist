@@ -1,0 +1,13 @@
+includes:
+	- phar://phpstan.phar/conf/config.levelmax.neon
+	- phar://phpstan.phar/conf/bleedingEdge.neon
+	- vendor/phpstan/phpstan-phpunit/extension.neon
+	- vendor/phpstan/phpstan-php-parser/extension.neon
+	- rules.neon
+
+parameters:
+	paths:
+		- src
+		- tests
+	excludes_analyse:
+		- %currentWorkingDirectory%/tests/Fixture

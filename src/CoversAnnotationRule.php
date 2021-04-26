@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Brainbits\PHPStan\Rules;
+namespace BrainbitsPhpStan;
 
 use Nette\Utils\Strings;
 use PhpParser\Comment\Doc;
@@ -12,27 +12,26 @@ use PHPStan\Analyser\Scope;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
+
 use function array_key_exists;
 use function preg_match;
 use function preg_split;
 use function sha1;
 use function sprintf;
 
+// phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
+
 /**
- * @implements \PHPStan\Rules\Rule<\PhpParser\Node>
+ * @implements Rule<Node>
  */
 final class CoversAnnotationRule implements Rule
 {
     private const TEST_CLASS_ENDING_STRING = 'Test';
 
-    /**
-     * @var string
-     */
+    /** @var string */
     private $unitTestNamespaceContainsString;
 
-    /**
-     * @var array<string, bool>
-     */
+    /** @var array<string, bool> */
     private $alreadyParsedDocComments = [];
 
     public function __construct(string $unitTestNamespaceContainsString)
@@ -53,7 +52,8 @@ final class CoversAnnotationRule implements Rule
         $messages = [];
         $lines = $this->getAnnotationLines($node, $scope);
 
-        $isUnitTest = $node instanceof Class_ && $node->extends
+        $isUnitTest = $node instanceof Class_
+            && (bool) $node->extends
             && $this->isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespaceContainsString);
 
         $hasCovers = false;

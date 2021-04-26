@@ -4,7 +4,7 @@
 
     <file>src</file>
     <file>tests</file>
-    <exclude-pattern>*/data/*</exclude-pattern>
+    <exclude-pattern>*/Fixture/*</exclude-pattern>
 
     <!-- Start here -->
     <arg name="basepath" value="."/>
@@ -21,16 +21,6 @@
     <!-- arg value="sp"/ -->
 
     <!-- Use brainbits coding standard -->
-    <rule ref="BrainbitsCodingStandard">
-        <exclude name="SlevomatCodingStandard.TypeHints.ReturnTypeHint.MissingNativeTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingNativeTypeHint"/>
-        <exclude name="SlevomatCodingStandard.TypeHints.ParameterTypeHint.MissingAnyTypeHint"/>
-        <exclude name="SlevomatCodingStandard.Functions.TrailingCommaInCall.MissingTrailingComma"/>
+    <rule ref="BrainbitsCodingStandardTest">
     </rule>
-
-    <!-- Forbid suffix "Exception" for exception classes -->
-    <rule ref="SlevomatCodingStandard.Classes.SuperfluousExceptionNaming"/>
-
-    <!-- Force commas after the last parameter in function or method call -->
-    <rule ref="SlevomatCodingStandard.Functions.TrailingCommaInCall"/>
 </ruleset>

@@ -1,14 +1,14 @@
 {
     "name": "brainbits/phpstan-rules",
     "description": "PHPStan extension with opinionated strict rules for better code in tests.",
-	"keywords": [
-		"phpstan",
-		"phpstan-rules",
-		"tests"
-	],
+    "keywords": [
+        "phpstan",
+        "phpstan-rules",
+        "tests"
+    ],
     "type": "phpstan-extension",
     "license": "MIT",
-	"homepage": "https://github.com/brainbits/phpstan-rules",
+    "homepage": "https://github.com/brainbits/phpstan-rules",
     "authors": [
         {
             "name": "Stephan Wentz",
@@ -23,53 +23,46 @@
         "phpstan/phpstan": "^0.12"
     },
     "require-dev": {
-        "brainbits/phpcs-standard": "^3.0",
-        "ergebnis/phpstan-rules": "^0.14.2",
-        "ikvasnica/phpstan-clean-test": "^0.3.0",
+        "brainbits/phpcs-standard": "^4.0",
         "php-coveralls/php-coveralls": "^2.0",
-        "phpstan/phpstan-strict-rules": "~0.12",
+        "phpstan/phpstan-php-parser": "^0.12.2",
+        "phpstan/phpstan-phpunit": "^0.12.16",
         "phpunit/phpunit": "^8.5.2 || ^9.0.0"
     },
-	"suggest": {
-		"phpstan/phpstan-deprecation-rules": "Rules for disallowing deprecation code.",
-		"phpstan/phpstan-strict-rules": "Strict and opinionated PHPStan rules.",
-		"phpstan/phpstan-phpunit": "PHPStan extension and rules to integrate with PHPUnit testing framework.",
-		"ergebnis/phpstan-rules": "Even more PHPStan strict and opinionated rules."
-	},
-	"scripts": {
-		"check-all": [
-			"phpcs",
-			"@phpstan",
-			"phpunit"
-		],
-		"phpstan": "phpstan analyse --ansi"
-	},
-	"autoload": {
-		"psr-4": {
-			"Brainbits\\PHPStan\\": "src/"
-		}
-	},
-	"autoload-dev": {
-		"classmap": [
-			"tests/"
-		]
-	},
-	"config": {
-		"preferred-install": "dist",
-		"sort-packages": true
-	},
-	"extra": {
-		"branch-alias": {
-			"dev-master": "1.0-dev"
-		},
-		"phpstan": {
-			"includes": [
-				"rules.neon"
-			]
-		}
-	},
-	"support": {
-		"issues": "https://github.com/brainbits/phpstan-rules/issues",
-		"source": "https://github.com/brainbits/phpstan-rules"
-	}
+    "scripts": {
+        "check-all": [
+            "phpcs",
+            "@phpstan",
+            "phpunit"
+        ],
+        "phpstan": "phpstan analyse --ansi"
+    },
+    "autoload": {
+        "psr-4": {
+            "BrainbitsPhpStan\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        },
+        "phpstan": {
+            "includes": [
+                "rules.neon"
+            ]
+        }
+    },
+    "support": {
+        "issues": "https://github.com/brainbits/phpstan-rules/issues",
+        "source": "https://github.com/brainbits/phpstan-rules"
+    }
 }
