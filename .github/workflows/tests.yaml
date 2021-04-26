@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['7.2', '7.3', '7.4']
+        php-versions: ['7.3', '7.4', '8.0']
 
     name: Tests on PHP ${{ matrix.php-versions }}
     steps:
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: shivammathur/setup-php@v1
         with:
-          php-version: 7.2
+          php-version: 7.3
           coverage: none
       - name: Load dependencies from cache
         id: composer-cache
@@ -50,9 +50,9 @@ jobs:
       - uses: actions/cache@v1
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-php7.2-lowest-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-php7.3-lowest-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            ${{ runner.os }}-php7.2-lowest-composer-
+            ${{ runner.os }}-php7.3-lowest-composer-
       - run: composer update --no-progress --no-suggest --prefer-lowest
       - run: php vendor/bin/phpunit
 

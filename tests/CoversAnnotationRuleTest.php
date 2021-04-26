@@ -16,8 +16,8 @@ final class CoversAnnotationRuleTest extends RuleTestCase
 {
     public function testRule(): void
     {
-        $this->analyse([__DIR__ . '/fixture/CoversAnnotationRule/fixture-without-unit.php'], []);
-        $this->analyse([__DIR__ . '/fixture/CoversAnnotationRule/Unit/fixture-with-unit.php'], [
+        $this->analyse([__DIR__ . '/Fixture/CoversAnnotationRule/fixture-without-unit.php'], []);
+        $this->analyse([__DIR__ . '/Fixture/CoversAnnotationRule/Unit/fixture-with-unit.php'], [
             ['No @covers or @coversDefaultClass found in test.', 17],
         ]);
     }

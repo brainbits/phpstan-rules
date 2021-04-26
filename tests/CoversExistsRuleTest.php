@@ -16,7 +16,7 @@ final class CoversExistsRuleTest extends RuleTestCase
 {
     public function testRule(): void
     {
-        $this->analyse([__DIR__ . '/fixture/CoversExistsRule/fixture.php'], [
+        $this->analyse([__DIR__ . '/Fixture/CoversExistsRule/fixture.php'], [
             ['Class BrainbitsPhpStan\Tests\Fixture\CoversExistsRule\Invalid does not exist.', 32],
             ['Class BrainbitsPhpStan\Tests\Fixture\CoversExistsRule\Invalid does not exist.', 33],
         ]);
