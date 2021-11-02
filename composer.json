@@ -20,13 +20,13 @@
         "php": "^7.3|^8.0",
         "nette/utils": "^3.0",
         "nikic/php-parser": "^4.3",
-        "phpstan/phpstan": "^0.12"
+        "phpstan/phpstan": "^1.0"
     },
     "require-dev": {
         "brainbits/phpcs-standard": "^4.0",
         "php-coveralls/php-coveralls": "^2.0",
-        "phpstan/phpstan-php-parser": "^0.12.2",
-        "phpstan/phpstan-phpunit": "^0.12.16",
+        "phpstan/phpstan-php-parser": "^1.0",
+        "phpstan/phpstan-phpunit": "^1.0",
         "phpunit/phpunit": "^8.5.2 || ^9.0.0"
     },
     "scripts": {
