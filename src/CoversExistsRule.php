@@ -71,7 +71,9 @@ final class CoversExistsRule implements Rule
             $matches = [];
 
             if (! preg_match('/^(?:\s*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*$/u', $lineContent, $matches)) {
-                continue;
+                if (! preg_match('/^(?:\s*\/\*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*\*\/\s*$/u', $lineContent, $matches)) {
+                    continue;
+                }
             }
 
             if ($this->broker->hasClass($matches['className'])) {

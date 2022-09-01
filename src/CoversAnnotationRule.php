@@ -63,6 +63,12 @@ final class CoversAnnotationRule implements Rule
                 $hasCovers = true;
                 break;
             }
+
+            $lineHasCovers = (bool) preg_match('/^(?:\s*\/\*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*\*\/\s*$/u', $lineContent, $matches);
+            if ($lineHasCovers) {
+                $hasCovers = true;
+                break;
+            }
         }
 
         if ($isUnitTest && !$hasCovers) {

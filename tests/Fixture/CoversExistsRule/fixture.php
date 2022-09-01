@@ -44,3 +44,23 @@ final class WithInvalidCoversTest extends TestCase
 final class UnitWithValidCoversTest extends TestCase
 {
 }
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversExistsRule\Valid */
+final class SingleLineValidClassUnitWithValidCoversTest extends TestCase
+{
+}
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversExistsRule\Valid::validMethod */
+final class SingleLineValidMethodUnitWithValidCoversTest extends TestCase
+{
+}
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversExistsRule\Invalid::invalid */
+final class SingleLineInvalidClassUnitWithInvalidCoversTest extends TestCase
+{
+}
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversExistsRule\Valid::invalidMethod */
+final class SingleLineInvalidMethodUnitWithValidCoversTest extends TestCase
+{
+}

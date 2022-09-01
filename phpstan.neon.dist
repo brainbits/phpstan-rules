@@ -9,5 +9,5 @@ parameters:
 	paths:
 		- src
 		- tests
-	excludes_analyse:
+	excludePaths:
 		- %currentWorkingDirectory%/tests/Fixture

@@ -33,3 +33,18 @@ final class WithInvalidCoversTest extends TestCase
 final class UnitWithValidCoversTest extends TestCase
 {
 }
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversAnnotationRule\JustAClass */
+final class SingleLineClassUnitWithValidCoversTest extends TestCase
+{
+}
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversAnnotationRule\JustAClass::test */
+final class SingleLineMethodUnitWithValidCoversTest extends TestCase
+{
+}
+
+/** @covers \BrainbitsPhpStan\Tests\Fixture\CoversAnnotationRule\Invalid::test */
+final class SingleLineMethodUnitWithInvalidCoversTest extends TestCase
+{
+}
