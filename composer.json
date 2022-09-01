@@ -17,7 +17,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^7.3|^8.0",
+        "php": "^7.4|^8.0",
         "nette/utils": "^3.0",
         "nikic/php-parser": "^4.3",
         "phpstan/phpstan": "^1.0"
