@@ -36,11 +36,16 @@ includes:
 ## Rules
 
 This package provides the following rules for use with [`phpstan/phpstan`](https://github.com/phpstan/phpstan):
--   [`Brainbits\PHPStan\Rules\CoversAnnotationRule`](#coversannotationrule)
+-   [`Brainbits\PHPStan\Rules\CoversClassExistsRule`](#CoversClassExistsRule)
+-   [`Brainbits\PHPStan\Rules\CoversClassPresentRule`](#CoversClassPresentRule)
 
-### `CoversAnnotationRule`
+### `CoversClassExistsRule`
 
-This rule forces you to specify a @covers or @coversDefaultClass annotation in unit tests (default: `PHPUnit\Framework\TestCase`).
+This rule checks that classes that are covered by `@covers` annotation or `#[CoversClass]` attribute exist.
+
+### `CoversClassPresentRule`
+
+This rule forces you to specify either a `@covers` annotation or `#[CoversClass]`, `#[CoversFunction]` or `#[CoversNothing]` attributes in unit tests (default: `PHPUnit\Framework\TestCase`).
 
 **Why:**
 1. It prevents code coverage sums to show higher values than expected. 
@@ -60,9 +65,8 @@ final class MyInvalidClassTest extends \PHPUnit\Framework\TestCase {}
 ```php
 // tests/ExampleTestCase/Unit/MyClassTest.php
 namespace ExampleTestCase\Unit;
-/**
- * @covers MyClass
- */
+
+#[\PHPUnit\Framework\Attributes\CoversClass(MyClass::class)
 final class MyClassTest extends \PHPUnit\Framework\TestCase {}
 ```
 
