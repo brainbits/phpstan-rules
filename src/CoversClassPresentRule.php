@@ -21,9 +21,7 @@ use function sprintf;
 
 // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
 
-/**
- * @implements Rule<Class_>
- */
+/** @implements Rule<Class_> */
 final class CoversClassPresentRule implements Rule
 {
     private const TEST_CLASS_ENDING_STRING = 'Test';
@@ -110,9 +108,7 @@ final class CoversClassPresentRule implements Rule
         return false;
     }
 
-    /**
-     * @return array<string>
-     */
+    /** @return array<string> */
     private function getAnnotationLines(Node $node, Scope $scope): array
     {
         $docComment = $node->getDocComment();
@@ -126,8 +122,8 @@ final class CoversClassPresentRule implements Rule
                 $scope->getFile(),
                 $docComment->getStartLine(),
                 $docComment->getStartFilePos(),
-                $docComment->getText()
-            )
+                $docComment->getText(),
+            ),
         );
 
         if (array_key_exists($hash, $this->alreadyParsedDocComments)) {

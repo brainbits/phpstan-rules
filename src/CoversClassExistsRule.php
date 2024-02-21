@@ -22,21 +22,14 @@ use function preg_split;
 use function sha1;
 use function sprintf;
 
-// phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
-
-/**
- * @implements Rule<Class_>
- */
+/** @implements Rule<Class_> */
 final class CoversClassExistsRule implements Rule
 {
-    /** @var Broker */
-    private $broker;
     /** @var bool[] */
-    private $alreadyParsedDocComments = [];
+    private array $alreadyParsedDocComments = [];
 
-    public function __construct(Broker $broker)
+    public function __construct(private Broker $broker)
     {
-        $this->broker = $broker;
     }
 
     public function getNodeType(): string
@@ -57,9 +50,7 @@ final class CoversClassExistsRule implements Rule
         return array_merge($messagesAttribute, $messagesAnnotation);
     }
 
-    /**
-     * @return RuleError[] errors
-     */
+    /** @return RuleError[] errors */
     public function processNodeAttribute(Class_ $node, Scope $scope): array
     {
         $messages = [];
@@ -108,9 +99,7 @@ final class CoversClassExistsRule implements Rule
         return $messages;
     }
 
-    /**
-     * @return RuleError[] errors
-     */
+    /** @return RuleError[] errors */
     public function processNodeAnnotation(Class_ $node, Scope $scope): array
     {
         $messages   = [];
@@ -124,7 +113,7 @@ final class CoversClassExistsRule implements Rule
             $scope->getFile(),
             $docComment->getStartLine(),
             $docComment->getStartFilePos(),
-            $docComment->getText()
+            $docComment->getText(),
         ));
         if (isset($this->alreadyParsedDocComments[$hash])) {
             return $messages;

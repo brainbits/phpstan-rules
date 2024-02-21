@@ -23,7 +23,7 @@
         "phpstan/phpstan": "^1.0"
     },
     "require-dev": {
-        "brainbits/phpcs-standard": "^4.0",
+        "brainbits/phpcs-standard": "^7.0",
         "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan-php-parser": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
