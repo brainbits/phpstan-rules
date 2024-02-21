@@ -1,0 +1,27 @@
+# https://help.github.com/en/categories/automating-your-workflow-with-github-actions
+
+name: "Release"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  tests:
+    name: "Create Release"
+
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      - uses: "actions/setup-node@v3"
+        with:
+          node-version: 'lts/*'
+
+      - name: "Run semantic-release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: npx semantic-release
