@@ -9,7 +9,7 @@ parametersSchema:
 
 services:
 	-
-		class: BrainbitsPhpStan\CoversAnnotationRule
+		class: BrainbitsPhpStan\CoversClassPresentRule
 		arguments:
 			unitTestNamespaceContainsString: %brainbits.unitTestNamespaceContainsString%
 		tags:
@@ -17,7 +17,7 @@ services:
 
 
 	-
-		class: BrainbitsPhpStan\CoversExistsRule
+		class: BrainbitsPhpStan\CoversClassExistsRule
 		tags:
 			- phpstan.rules.rule
 
