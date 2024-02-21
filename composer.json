@@ -27,7 +27,7 @@
         "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan-php-parser": "^1.0",
         "phpstan/phpstan-phpunit": "^1.0",
-        "phpunit/phpunit": "^8.5.2 || ^9.0.0"
+        "phpunit/phpunit": "^10.5"
     },
     "scripts": {
         "check-all": [
