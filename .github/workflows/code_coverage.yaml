@@ -11,25 +11,30 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: shivammathur/setup-php@master
-      with:
-        php-version: 8.1
-        coverage: xdebug
-    - name: Load dependencies from cache
-      id: composer-cache
-      run: |
-        echo "::set-output name=dir::$(composer config cache-files-dir)"
-    - uses: actions/cache@v1
-      with:
-        path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-php8.1-composer-${{ hashFiles('**/composer.json') }}
-        restore-keys: |
-          ${{ runner.os }}-php8.1-composer-
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@master
+        with:
+          php-version: 8.3
+          coverage: xdebug
+      - name: Load dependencies from cache
+        id: composer-cache
+        run: |
+          echo "::set-output name=dir::$(composer config cache-files-dir)"
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-php8.3-composer-${{ hashFiles('**/composer.json') }}
+          restore-keys: |
+            ${{ runner.os }}-php8.3-composer-
 
-    - run: composer install --prefer-dist --no-progress --no-suggest
-    - run: php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-    - run: php vendor/bin/php-coveralls --verbose
-      env:
-        COVERALLS_RUN_LOCALLY: 1
-        COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+      - run: composer install --prefer-dist --no-progress --no-suggest
+      - run: php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+
+      - uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          files: build/logs/clover.xml # optional
+          flags: unittests # optional
+          name: codecov-umbrella # optional
+          fail_ci_if_error: true # optional (default = false)
+          verbose: true # optional (default = false)

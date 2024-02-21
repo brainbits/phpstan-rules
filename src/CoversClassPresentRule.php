@@ -22,9 +22,9 @@ use function sprintf;
 // phpcs:disable SlevomatCodingStandard.TypeHints.PropertyTypeHint.MissingNativeTypeHint
 
 /**
- * @implements Rule<Node>
+ * @implements Rule<Class_>
  */
-final class CoversAnnotationRule implements Rule
+final class CoversClassPresentRule implements Rule
 {
     private const TEST_CLASS_ENDING_STRING = 'Test';
 
@@ -41,42 +41,73 @@ final class CoversAnnotationRule implements Rule
 
     public function getNodeType(): string
     {
-        return Node::class;
+        return Class_::class;
     }
 
     /**
+     * @param Class_ $node
+     *
      * @return array<RuleError>
      */
     public function processNode(Node $node, Scope $scope): array
     {
         $messages = [];
-        $lines = $this->getAnnotationLines($node, $scope);
 
-        $isUnitTest = $node instanceof Class_
-            && (bool) $node->extends
+        $isUnitTest = (bool) $node->extends
             && $this->isUnitTest((string) $scope->getNamespace(), (string) $node->name, $this->unitTestNamespaceContainsString);
 
-        $hasCovers = false;
-        foreach ($lines as $lineContent) {
-            $lineHasCovers = (bool) preg_match('/^(?:\s*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*$/u', $lineContent, $matches);
-            if ($lineHasCovers) {
-                $hasCovers = true;
-                break;
-            }
-
-            $lineHasCovers = (bool) preg_match('/^(?:\s*\/\*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*\*\/\s*$/u', $lineContent, $matches);
-            if ($lineHasCovers) {
-                $hasCovers = true;
-                break;
-            }
-        }
+        $hasCovers = $this->processNodeAnnotation($node, $scope) || $this->processNodeAttribute($node, $scope);
 
         if ($isUnitTest && !$hasCovers) {
-            $messages[] = RuleErrorBuilder::message('No @covers or @coversDefaultClass found in test.')
+            $messages[] = RuleErrorBuilder::message('No @covers or #[CoversClass] found in test.')
                 ->build();
         }
 
         return $messages;
+    }
+
+    public function processNodeAnnotation(Class_ $node, Scope $scope): bool
+    {
+        $lines = $this->getAnnotationLines($node, $scope);
+
+        foreach ($lines as $lineContent) {
+            $lineHasCovers = (bool) preg_match('/^(?:\s*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*$/u', $lineContent, $matches);
+            if ($lineHasCovers) {
+                return true;
+            }
+
+            $lineHasCovers = (bool) preg_match('/^(?:\s*\/\*\*\s*@(?:covers|coversDefaultClass)\h+)\\\\?(?<className>\w[^:\s]*)(?:::\S+)?\s*\*\/\s*$/u', $lineContent, $matches);
+            if ($lineHasCovers) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function processNodeAttribute(Class_ $node, Scope $scope): bool
+    {
+        if (!$node->attrGroups) {
+            return false;
+        }
+
+        foreach ($node->attrGroups as $attrGroup) {
+            foreach ($attrGroup->attrs as $name => $attr) {
+                if ((string) $attr->name === 'PHPUnit\Framework\Attributes\CoversClass') {
+                    return true;
+                }
+
+                if ((string) $attr->name === 'PHPUnit\Framework\Attributes\CoversFunction') {
+                    return true;
+                }
+
+                if ((string) $attr->name === 'PHPUnit\Framework\Attributes\CoversNothing') {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     /**
@@ -93,8 +124,8 @@ final class CoversAnnotationRule implements Rule
             sprintf(
                 '%s:%s:%s:%s',
                 $scope->getFile(),
-                $docComment->getLine(),
-                $docComment->getFilePos(),
+                $docComment->getStartLine(),
+                $docComment->getStartFilePos(),
                 $docComment->getText()
             )
         );
