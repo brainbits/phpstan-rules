@@ -21,6 +21,6 @@
     <!-- arg value="sp"/ -->
 
     <!-- Use brainbits coding standard -->
-    <rule ref="BrainbitsCodingStandardTest">
+    <rule ref="Brainbits">
     </rule>
 </ruleset>

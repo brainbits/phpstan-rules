@@ -10,7 +10,7 @@ use PhpParser\Node\Name;
 use PhpParser\Node\Scalar\String_;
 use PhpParser\Node\Stmt\Class_;
 use PHPStan\Analyser\Scope;
-use PHPStan\Broker\Broker;
+use PHPStan\Reflection\ReflectionProvider;
 use PHPStan\Rules\Rule;
 use PHPStan\Rules\RuleError;
 use PHPStan\Rules\RuleErrorBuilder;
@@ -28,7 +28,7 @@ final class CoversClassExistsRule implements Rule
     /** @var bool[] */
     private array $alreadyParsedDocComments = [];
 
-    public function __construct(private Broker $broker)
+    public function __construct(private ReflectionProvider $reflectionProvider)
     {
     }
 
@@ -74,7 +74,7 @@ final class CoversClassExistsRule implements Rule
                     assert($arg->value->class instanceof Name);
 
                     $className = (string) $arg->value->class;
-                    if ($this->broker->hasClass($className)) {
+                    if ($this->reflectionProvider->hasClass($className)) {
                         continue;
                     }
 
@@ -85,7 +85,7 @@ final class CoversClassExistsRule implements Rule
 
                 if ($arg->value instanceof String_) {
                     $className = (string) $arg->value->value;
-                    if ($this->broker->hasClass($className)) {
+                    if ($this->reflectionProvider->hasClass($className)) {
                         continue;
                     }
 
@@ -135,7 +135,7 @@ final class CoversClassExistsRule implements Rule
                 }
             }
 
-            if ($this->broker->hasClass($matches['className'])) {
+            if ($this->reflectionProvider->hasClass($matches['className'])) {
                 continue;
             }
 

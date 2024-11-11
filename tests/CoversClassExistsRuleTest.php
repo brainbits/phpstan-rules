@@ -7,11 +7,10 @@ namespace BrainbitsPhpStan\Tests;
 use BrainbitsPhpStan\CoversClassExistsRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \BrainbitsPhpStan\CoversClassExistsRule
- * @extends RuleTestCase<CoversClassExistsRule>
- */
+/** @extends RuleTestCase<CoversClassExistsRule> */
+#[CoversClass(CoversClassExistsRule::class)]
 final class CoversClassExistsRuleTest extends RuleTestCase
 {
     public function testAttributeRule(): void
@@ -31,7 +30,7 @@ final class CoversClassExistsRuleTest extends RuleTestCase
 
     protected function getRule(): Rule
     {
-        $broker = $this->createBroker();
+        $broker = self::createReflectionProvider();
 
         return new CoversClassExistsRule($broker);
     }
