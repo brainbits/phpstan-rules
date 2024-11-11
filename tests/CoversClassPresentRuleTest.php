@@ -7,11 +7,10 @@ namespace BrainbitsPhpStan\Tests;
 use BrainbitsPhpStan\CoversClassPresentRule;
 use PHPStan\Rules\Rule;
 use PHPStan\Testing\RuleTestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
 
-/**
- * @covers \BrainbitsPhpStan\CoversClassPresentRule
- * @extends RuleTestCase<CoversClassPresentRule>
- */
+/** @extends RuleTestCase<CoversClassPresentRule> */
+#[CoversClass(CoversClassPresentRule::class)]
 final class CoversClassPresentRuleTest extends RuleTestCase
 {
     public function testAnnotationWithoutUnitRule(): void
