@@ -24,7 +24,7 @@ use function sprintf;
 /** @implements Rule<Class_> */
 final class CoversClassPresentRule implements Rule
 {
-    private const TEST_CLASS_ENDING_STRING = 'Test';
+    private const string TEST_CLASS_ENDING_STRING = 'Test';
 
     /** @var string */
     private $unitTestNamespaceContainsString;
