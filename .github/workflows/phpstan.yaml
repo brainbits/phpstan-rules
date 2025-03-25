@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v4
     - uses: shivammathur/setup-php@master
       with:
-        php-version: 8.3
+        php-version: 8.4
         coverage: none
     - name: Load dependencies from cache
       id: composer-cache
@@ -22,9 +22,9 @@ jobs:
     - uses: actions/cache@v4
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
-        key: ${{ runner.os }}-php8.3-composer-${{ hashFiles('**/composer.json') }}
+        key: ${{ runner.os }}-php8.4-composer-${{ hashFiles('**/composer.json') }}
         restore-keys: |
-          ${{ runner.os }}-php8.3-composer-
+          ${{ runner.os }}-php8.4-composer-
 
     - run: composer install --prefer-dist --no-progress --no-suggest
     - run: composer run-script phpstan

@@ -11,7 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php-versions: ['8.3']
+        php-versions: 
+          - 8.3
+          - 8.4
 
     name: Tests on PHP ${{ matrix.php-versions }}
     steps:
@@ -41,7 +43,7 @@ jobs:
       - uses: actions/checkout@master
       - uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.3
+          php-version: 8.4
           coverage: none
       - name: Load dependencies from cache
         id: composer-cache
@@ -50,9 +52,9 @@ jobs:
       - uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-php8.3-lowest-composer-${{ hashFiles('**/composer.json') }}
+          key: ${{ runner.os }}-php8.4-lowest-composer-${{ hashFiles('**/composer.json') }}
           restore-keys: |
-            ${{ runner.os }}-php8.3-lowest-composer-
+            ${{ runner.os }}-php8.4-lowest-composer-
       - run: composer update --no-progress --no-suggest --prefer-lowest
       - run: php vendor/bin/phpunit
 
