@@ -4,7 +4,7 @@ on:
   pull_request: null
   push:
     branches:
-      - master
+      - main
 
 jobs:
   tests:
@@ -17,7 +17,7 @@ jobs:
 
     name: Tests on PHP ${{ matrix.php-versions }}
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v4
     - uses: shivammathur/setup-php@v2
       with:
         php-version: ${{ matrix.php-versions }}
@@ -40,7 +40,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Tests with lowest dependencies
     steps:
-      - uses: actions/checkout@master
+      - uses: actions/checkout@v4
       - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
