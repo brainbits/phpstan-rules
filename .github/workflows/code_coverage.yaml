@@ -17,7 +17,7 @@ jobs:
 
     steps:
       - name: "Checkout"
-        uses: "actions/checkout@v4"
+        uses: "actions/checkout@v7"
 
       - name: "Install PHP"
         uses: "shivammathur/setup-php@v2"
@@ -30,7 +30,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
 
       - name: "Cache dependencies"
-        uses: "actions/cache@v4"
+        uses: "actions/cache@v6"
         with:
           path: "${{ steps.composer-cache.outputs.dir }}"
           key: "coverage-php-8.5-composer-${{ hashFiles('**/composer.json') }}"
@@ -43,7 +43,7 @@ jobs:
         run: "vendor/bin/phpunit --coverage-clover build/logs/clover.xml"
 
       - name: "Upload coverage"
-        uses: "codecov/codecov-action@v5"
+        uses: "codecov/codecov-action@v7"
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: "build/logs/clover.xml"
