@@ -33,8 +33,8 @@ jobs:
         uses: "actions/cache@v4"
         with:
           path: "${{ steps.composer-cache.outputs.dir }}"
-          key: "php-8.5-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys: "php-8.5-composer-"
+          key: "coverage-php-8.5-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "coverage-php-8.5-composer-"
 
       - name: "Install dependencies"
         run: "composer update --prefer-dist --no-interaction --no-progress"

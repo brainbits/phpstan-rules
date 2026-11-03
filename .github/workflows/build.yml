@@ -43,8 +43,8 @@ jobs:
         uses: "actions/cache@v4"
         with:
           path: "${{ steps.composer-cache.outputs.dir }}"
-          key: "php-${{ matrix.php-version }}-composer-${{ hashFiles('**/composer.json') }}"
-          restore-keys: "php-${{ matrix.php-version }}-composer-"
+          key: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "php-${{ matrix.php-version }}-${{ matrix.dependencies }}-composer-"
 
       - name: "Validate composer.json"
         run: "composer validate --strict"
