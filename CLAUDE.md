@@ -5,7 +5,8 @@
 `brainbits/phpstan-rules` ist eine PHPStan-Extension (Composer-Typ `phpstan-extension`) mit
 zwei strikten Regeln für PHPUnit-Testklassen. Reine Library, keine Anwendung.
 
-- PHP ^8.4. Abhängigkeiten: `phpstan/phpstan` ^2.3, `nikic/php-parser` ^5, `nette/utils` ^4.1,
+- PHP ^8.4. Abhängigkeiten: `phpstan/phpstan` ^2.3, `nette/utils` ^4.1 (php-parser kommt
+  aus dem PHPStan-PHAR, nicht als eigene Abhängigkeit),
   Dev: PHPUnit ^13.4, `phpstan/phpstan-phpunit` ^2.1, `brainbits/phpcs-standard` ^8.
 - CI (`.github/workflows/build.yml`): PHP 8.4 und 8.5, jeweils mit `lowest`- und
   `highest`-Abhängigkeiten. Bei `highest` laufen zusätzlich phpcs und PHPStan.
