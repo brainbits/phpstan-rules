@@ -1,40 +1,74 @@
 # CLAUDE.md
 
-PHPStan extension (`brainbits/phpstan-rules`, type `phpstan-extension`) with opinionated rules for PHPUnit test classes. Small library: two rules, no runtime app.
+## Projekt
 
-## Commands
+`brainbits/phpstan-rules` ist eine PHPStan-Extension (Composer-Typ `phpstan-extension`) mit
+zwei strikten Regeln für PHPUnit-Testklassen. Reine Library, keine Anwendung.
 
-```shell
+- PHP ^8.4. Abhängigkeiten: `phpstan/phpstan` ^2.3, `nikic/php-parser` ^5, `nette/utils` ^4.1,
+  Dev: PHPUnit ^13.4, `phpstan/phpstan-phpunit` ^2.1, `brainbits/phpcs-standard` ^8.
+- CI (`.github/workflows/build.yml`): PHP 8.4 und 8.5, jeweils mit `lowest`- und
+  `highest`-Abhängigkeiten. Bei `highest` laufen zusätzlich phpcs und PHPStan.
+  `composer validate --strict` muss durchgehen.
+- `code_coverage.yaml`: Coverage über Codecov (PHP 8.5, Xdebug).
+- `release.yaml`: semantic-release bei Push nach `main` (siehe Release).
+
+## Aufbau
+
+- `src/` – Regeln, Namespace `BrainbitsPhpStan\` (PSR-4).
+  - `CoversClassExistsRule` – meldet `#[CoversClass(...)]`-Attribute und
+    `@covers`/`@coversDefaultClass`-Annotationen, die auf eine nicht existierende Klasse
+    zeigen. Nutzt den `ReflectionProvider` (autowired).
+  - `CoversClassPresentRule` – verlangt in Unit-Tests `@covers`/`@coversDefaultClass` oder
+    `#[CoversClass]`/`#[CoversFunction]`/`#[CoversNothing]`. Unit-Test heißt: Klasse erbt
+    von irgendetwas, Namespace enthält `unitTestNamespaceContainsString` (Default `Unit`),
+    Klassenname endet auf `Test`.
+- `rules.neon` – Service-Registrierung (Tag `phpstan.rules.rule`), Parameter
+  `brainbits.unitTestNamespaceContainsString` samt `parametersSchema`. Wird über
+  `extra.phpstan.includes` in `composer.json` automatisch eingebunden. Neue Regeln und
+  Parameter hier registrieren.
+- `tests/` – je Regel ein `RuleTestCase` (Classmap-Autoload, Namespace
+  `BrainbitsPhpStan\Tests`).
+- `tests/Fixture/<Regel>/` – PHP-Dateien, die die Tests analysieren. Fixtures für
+  `CoversClassPresentRule` unter `Unit/` decken die Namespace-Prüfung ab.
+- `phpstan.neon.dist` – analysiert `src/` und `tests/` dieses Repos (Level max,
+  bleedingEdge, eigene `rules.neon`).
+- `phpcs.xml.dist` – prüft `src/` und `tests/` mit dem Brainbits-Standard.
+
+## Befehle
+
+```bash
 composer install
-vendor/bin/phpunit          # tests
-vendor/bin/phpcs            # coding standard (brainbits/phpcs-standard)
-composer phpstan            # static analysis, level max + bleedingEdge
-composer check-all          # phpcs + phpstan + phpunit
+
+vendor/bin/phpunit                                  # Tests
+vendor/bin/phpunit --filter testAttributeWithUnitRule   # einzelner Test
+vendor/bin/phpcs                                    # Coding Standard
+vendor/bin/phpstan analyse                          # Statische Analyse
 ```
 
-Single test: `vendor/bin/phpunit --filter testAttributeWithUnitRule`
+Es gibt keine Composer-Scripts.
 
-CI (`.github/workflows/`) runs tests on PHP 8.3 and 8.4, plus a `--prefer-lowest` run on 8.4; phpcs, phpstan and coverage run on 8.4. `composer validate --strict` must pass.
+## Arbeitsweise
 
-## Layout
-
-- `src/` – rules, namespace `BrainbitsPhpStan\` (PSR-4). Note: README lists them as `Brainbits\PHPStan\Rules\…`, which is wrong; the real namespace is `BrainbitsPhpStan`.
-  - `CoversClassExistsRule` – reports `#[CoversClass(...)]` attributes and `@covers` / `@coversDefaultClass` annotations that reference a non-existent class. Uses `ReflectionProvider` (autowired).
-  - `CoversClassPresentRule` – requires `@covers`/`@coversDefaultClass` or `#[CoversClass]`/`#[CoversFunction]`/`#[CoversNothing]` on unit tests. A class counts as a unit test if it extends something, its namespace contains `unitTestNamespaceContainsString` (default `Unit`) and its name ends with `Test`.
-- `rules.neon` – service registration (tag `phpstan.rules.rule`), the `brainbits.unitTestNamespaceContainsString` parameter and its `parametersSchema`. Auto-included via `extra.phpstan.includes` in `composer.json`. New rules and parameters must be registered here.
-- `tests/` – one `RuleTestCase` per rule (classmap autoload, namespace `BrainbitsPhpStan\Tests`).
-- `tests/Fixture/<RuleName>/` – PHP files analysed by the tests. `CoversClassPresentRule` fixtures under `Unit/` exercise the namespace check.
-
-## Conventions and gotchas
-
-- Both rules operate on `PhpParser\Node\Stmt\Class_` and check attributes and docblock annotations separately. Annotation parsing is regex-based and line-based; the same regexes exist in both rules – keep them in sync.
-- Attribute names are compared as fully qualified strings (`PHPUnit\Framework\Attributes\CoversClass`), relying on PHPStan's name resolution.
-- Tests assert on exact error messages **and line numbers** in fixtures. Editing a fixture shifts lines – update the expected line numbers in the test.
-- Fixtures are excluded from phpcs and phpstan on purpose (they contain intentionally broken code). Don't "fix" them.
-- Coding standard: `declare(strict_types=1)`, explicit `use function` imports, final classes, native type hints (one targeted `phpcs:disable` exists in `CoversClassPresentRule`).
-- Supported: PHP `^8.3`, PHPStan `^2.0`, nikic/php-parser `^4.3|^5.0`. Code must work with the lowest versions too (CI `--prefer-lowest` job).
-- When changing rule behaviour or parameters, update `README.md`.
+- Beide Regeln arbeiten auf `PhpParser\Node\Stmt\Class_` und prüfen Attribute und
+  Docblock-Annotationen getrennt. Die Annotationen werden zeilenweise per Regex gelesen;
+  dieselben Regexe stehen in beiden Regeln – synchron halten.
+- Attributnamen werden als voll qualifizierte Strings verglichen
+  (`PHPUnit\Framework\Attributes\CoversClass`), PHPStan löst die Namen vorher auf.
+- Tests prüfen exakte Fehlermeldungen **und Zeilennummern** in den Fixtures. Wer ein
+  Fixture ändert, verschiebt Zeilen – erwartete Zeilennummern im Test nachziehen.
+- Fixtures sind absichtlich von phpcs und PHPStan ausgenommen (sie enthalten gewollt
+  fehlerhaften Code). Nicht "reparieren".
+- Code muss den Brainbits-Standard erfüllen: `declare(strict_types=1);`, importierte
+  Funktionen (`use function`), finale Klassen, native Typen.
+- CI testet auch `--prefer-lowest`, Versionsconstraints also nicht höher setzen als nötig,
+  aber auch nicht so niedrig, dass die niedrigste Version die Tests bricht.
+- Regelverhalten oder Parameter geändert → `README.md` anpassen.
+- Abhängigkeiten aktualisiert Dependabot (`.github/dependabot.yml`: GitHub Actions und
+  Composer).
 
 ## Release
 
-semantic-release on push to `main` (`.releaserc`, tags without `v` prefix). Commit messages must follow Conventional Commits (`feat:`, `fix:`, `docs:`, `chore:`, `ci:`, `test:`) – they determine the version bump. Dependency updates come from Renovate (`renovate.json`).
+semantic-release bei Push nach `main` (`.releaserc`, Tags ohne `v`-Präfix). Commits im Stil
+Conventional Commits (`feat:`, `fix:`, `fix(deps):`, `docs:`, `chore:`, `ci:`, `test:`) –
+sie bestimmen die Versionsnummer. Entwicklungsbranch ist `main`; `master` ist veraltet.

@@ -1,40 +1,44 @@
-name: Code Coverage
+name: "Code Coverage"
 
 on:
-  pull_request: null
+  pull_request:
   push:
     branches:
-      - main
+      - "main"
 
 jobs:
   code_coverage:
+    name: "Code Coverage"
 
-    runs-on: ubuntu-latest
+    runs-on: "ubuntu-latest"
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: shivammathur/setup-php@v2
-        with:
-          php-version: 8.4
-          coverage: xdebug
-      - name: Load dependencies from cache
-        id: composer-cache
-        run: |
-          echo "::set-output name=dir::$(composer config cache-files-dir)"
-      - uses: actions/cache@v4
-        with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-php8.4-composer-${{ hashFiles('**/composer.json') }}
-          restore-keys: |
-            ${{ runner.os }}-php8.4-composer-
+      - name: "Checkout"
+        uses: "actions/checkout@v4"
 
-      - run: composer install --prefer-dist --no-progress --no-suggest
-      - run: php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
-
-      - uses: codecov/codecov-action@v5
+      - name: "Install PHP"
+        uses: "shivammathur/setup-php@v2"
         with:
-          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-          files: build/logs/clover.xml # optional
-          flags: unittests # optional
-          name: codecov-umbrella # optional
-          fail_ci_if_error: true # optional (default = false)
-          verbose: true # optional (default = false)
+          coverage: "xdebug"
+          php-version: "8.5"
+
+      - name: "Cache dependencies"
+        uses: "actions/cache@v4"
+        with:
+          path: "~/.composer/cache"
+          key: "php-8.5-composer-${{ hashFiles('**/composer.json') }}"
+          restore-keys: "php-8.5-composer-"
+
+      - name: "Install dependencies"
+        run: "composer update --prefer-dist --no-interaction --no-progress --no-suggest"
+
+      - name: "Tests with coverage"
+        run: "vendor/bin/phpunit --coverage-clover build/logs/clover.xml"
+
+      - name: "Upload coverage"
+        uses: "codecov/codecov-action@v5"
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: "build/logs/clover.xml"
+          flags: "unittests"
+          fail_ci_if_error: true
