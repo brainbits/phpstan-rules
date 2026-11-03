@@ -17,24 +17,14 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.3",
+        "php": "^8.4",
         "nette/utils": "^4.0",
-        "nikic/php-parser": "^4.3|^5.0",
         "phpstan/phpstan": "^2.0"
     },
     "require-dev": {
         "brainbits/phpcs-standard": "^8.0",
-        "php-coveralls/php-coveralls": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
-        "phpunit/phpunit": "^12.0"
-    },
-    "scripts": {
-        "check-all": [
-            "phpcs",
-            "@phpstan",
-            "phpunit"
-        ],
-        "phpstan": "phpstan analyse --ansi"
+        "phpunit/phpunit": "^13.4"
     },
     "autoload": {
         "psr-4": {
@@ -54,9 +44,6 @@
         }
     },
     "extra": {
-        "branch-alias": {
-            "dev-master": "1.0-dev"
-        },
         "phpstan": {
             "includes": [
                 "rules.neon"

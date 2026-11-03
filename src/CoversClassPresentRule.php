@@ -90,7 +90,7 @@ final class CoversClassPresentRule implements Rule
         }
 
         foreach ($node->attrGroups as $attrGroup) {
-            foreach ($attrGroup->attrs as $name => $attr) {
+            foreach ($attrGroup->attrs as $attr) {
                 if ((string) $attr->name === 'PHPUnit\Framework\Attributes\CoversClass') {
                     return true;
                 }
