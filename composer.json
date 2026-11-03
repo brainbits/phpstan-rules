@@ -18,12 +18,12 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.4",
-        "nette/utils": "^4.1",
-        "phpstan/phpstan": "^2.3"
+        "nette/utils": "^4.0",
+        "phpstan/phpstan": "^2.0"
     },
     "require-dev": {
         "brainbits/phpcs-standard": "^8.0",
-        "phpstan/phpstan-phpunit": "^2.1",
+        "phpstan/phpstan-phpunit": "^2.0",
         "phpunit/phpunit": "^13.4"
     },
     "autoload": {
