@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/brainbits/phpstan-rules/branch/main/graph/badge.svg)](https://codecov.io/gh/brainbits/phpstan-rules)
 [![Latest Stable Version](https://poser.pugx.org/brainbits/phpstan-rules/version)](https://packagist.org/packages/brainbits/phpstan-rules)
 [![License](https://poser.pugx.org/brainbits/phpstan-rules/license)](https://packagist.org/packages/brainbits/phpstan-rules)
+[![Total Downloads](https://img.shields.io/packagist/dt/brainbits/phpstan-rules.svg)](https://packagist.org/packages/brainbits/phpstan-rules)
 
 -   [PHPStan](https://github.com/phpstan/phpstan)
 -   [PHPStan-PHPUnit extension](https://github.com/phpstan/phpstan-phpunit)
