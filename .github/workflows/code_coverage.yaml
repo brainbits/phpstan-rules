@@ -6,6 +6,9 @@ on:
     branches:
       - "main"
 
+permissions:
+  contents: "read"
+
 jobs:
   code_coverage:
     name: "Code Coverage"
@@ -22,15 +25,19 @@ jobs:
           coverage: "xdebug"
           php-version: "8.5"
 
+      - name: "Determine composer cache directory"
+        id: "composer-cache"
+        run: echo "dir=$(composer config cache-files-dir)" >> "$GITHUB_OUTPUT"
+
       - name: "Cache dependencies"
         uses: "actions/cache@v4"
         with:
-          path: "~/.composer/cache"
+          path: "${{ steps.composer-cache.outputs.dir }}"
           key: "php-8.5-composer-${{ hashFiles('**/composer.json') }}"
           restore-keys: "php-8.5-composer-"
 
       - name: "Install dependencies"
-        run: "composer update --prefer-dist --no-interaction --no-progress --no-suggest"
+        run: "composer update --prefer-dist --no-interaction --no-progress"
 
       - name: "Tests with coverage"
         run: "vendor/bin/phpunit --coverage-clover build/logs/clover.xml"

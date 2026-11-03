@@ -10,7 +10,8 @@ zwei strikten Regeln für PHPUnit-Testklassen. Reine Library, keine Anwendung.
 - CI (`.github/workflows/build.yml`): PHP 8.4 und 8.5, jeweils mit `lowest`- und
   `highest`-Abhängigkeiten. Bei `highest` laufen zusätzlich phpcs und PHPStan.
   `composer validate --strict` muss durchgehen.
-- `code_coverage.yaml`: Coverage über Codecov (PHP 8.5, Xdebug).
+- `code_coverage.yaml`: Coverage über Codecov (PHP 8.5, Xdebug). `codecov.yml` erlaubt beim
+  Projekt-Status 1 % Toleranz.
 - `release.yaml`: semantic-release bei Push nach `main` (siehe Release).
 
 ## Aufbau

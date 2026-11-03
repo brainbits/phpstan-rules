@@ -45,7 +45,7 @@ This rule checks that classes that are covered by `@covers` annotation or `#[Cov
 
 ### `CoversClassPresentRule`
 
-This rule forces you to specify either a `@covers` annotation or `#[CoversClass]`, `#[CoversFunction]` or `#[CoversNothing]` attributes in unit tests (default: `PHPUnit\Framework\TestCase`).
+This rule forces you to specify either a `@covers` annotation or `#[CoversClass]`, `#[CoversFunction]` or `#[CoversNothing]` attributes in unit tests.
 
 **Why:**
 1. It prevents code coverage sums to show higher values than expected. 
@@ -72,7 +72,7 @@ final class MyClassTest extends \PHPUnit\Framework\TestCase {}
 
 #### Defaults
 
--   By default, this rule detects unit tests by checking the namespace (it must contain the string `Unit`) and the class name ending (it must end with the string `Test`).
+-   By default, this rule treats a class as a unit test if it extends another class, its namespace contains the string `Unit` and its name ends with `Test`. The parent class itself is not checked.
 
 #### Detecting unit tests namespace
 If you want to change the namespace string check described above, you can set your own string to be checked in the `unitTestNamespaceContainsString` parameter.
