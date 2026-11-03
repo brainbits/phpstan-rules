@@ -2,7 +2,6 @@
 
 [![Build](https://github.com/brainbits/phpstan-rules/actions/workflows/build.yml/badge.svg?branch=main)](https://github.com/brainbits/phpstan-rules/actions/workflows/build.yml)
 [![codecov](https://codecov.io/gh/brainbits/phpstan-rules/branch/main/graph/badge.svg)](https://codecov.io/gh/brainbits/phpstan-rules)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/881bcaeeaa2a45f59b0a77680f15fafe)](https://www.codacy.com/manual/brainbits/phpstan-rules?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=brainbits/phpstan-rules&amp;utm_campaign=Badge_Grade)
 [![Latest Stable Version](https://poser.pugx.org/brainbits/phpstan-rules/version)](https://packagist.org/packages/brainbits/phpstan-rules)
 [![License](https://poser.pugx.org/brainbits/phpstan-rules/license)](https://packagist.org/packages/brainbits/phpstan-rules)
 
